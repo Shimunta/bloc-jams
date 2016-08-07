@@ -30,6 +30,22 @@ var albumMarconi = {
         ]
 };
 
+//Another Album
+var albumKings = {
+    title: 'Live in Color',
+    artist: 'Kings Kalidescope',
+    label: 'EM',
+    year: '1909',
+    albumArtUrl: 'assets/images/album_covers/10.png',
+    songs: [
+        { title: 'Hello Operator?', duration: '1:01' },
+        { title: 'Ring, ring, ring', duration: '5:01' },
+        { title: 'Fits in your pocket', duration: '3:21' },
+        { title: 'Can you har me now?', duration: '3:14' },
+        { title: 'Wrong phone number', duration: '2:15' }
+        ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
@@ -42,13 +58,14 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
-var setCurrentAlbum = function(album) {
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
      var albumImage = document.getElementsByClassName('album-cover-art')[0];
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
-    
+
+var setCurrentAlbum = function(album) {
+
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
     albumReleaseInfo.firstChild.nodevalue = album.year + ' ' + album.label;
@@ -63,4 +80,14 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+    
+    var albums = [albumPicasso, albumMarconi, albumKings];
+    var index = 1;
+    albumImage.addEventListener("click", function() {
+        setCurrentAlbum(albums[index]);
+        index ++;
+        if(index == albums.length) {
+            index = 0;
+        }
+    });
 }
