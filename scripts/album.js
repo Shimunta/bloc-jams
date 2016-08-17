@@ -24,8 +24,8 @@ var createSongRow = function(songNumber, songName, songLength) {
             updatePlayerBarSong();
         } else if (currentlyPlayingSongNumber === songNumber) {
             if (currentSoundFile.isPaused()) {
-                $(this).html(playButtonTemplate);
-                $('.main-controls .play-pause').html(playerBarPlayButton)
+                $(this).html(pauseButtonTemplate);
+                $('.main-controls .play-pause').html(playerBarPauseButton)
                 currentSoundFile.play();
             } else {
                 //pause that shit
@@ -143,18 +143,23 @@ var previousSong = function() {
 }
 
 var togglePlayFromPlayerBar = function() {
-    if (currentSoundFile.isPaused()) {
+    if (currentlyPlayingSongNumber == null) {
+        setSong(1);
         currentSoundFile.play();
         $(this).html(playerBarPauseButton);
         $currentSong = getSongNumberCell(currentlyPlayingSongNumber);
-        $currentSong.html(currentlyPlayingSongNumber);
+        $currentSong.html(pauseButtonTemplate);
+    } else if (currentSoundFile.isPaused()) {
+        currentSoundFile.play();
+        $(this).html(playerBarPauseButton);
+        $currentSong = getSongNumberCell(currentlyPlayingSongNumber);
+        $currentSong.html(pauseButtonTemplate);
     } else {
         currentSoundFile.pause();
         $(this).html(playerBarPlayButton);  
         $currentSong = getSongNumberCell(currentlyPlayingSongNumber);
-        $currentSong.html(playerBarPlayButton);
-    } 
-        
+        $currentSong.html(playButtonTemplate);
+    }
 }
    
 var updatePlayerBarSong = function() {
@@ -203,7 +208,7 @@ var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
-var currentVolume = 80;
+var currentVolume = 5;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
